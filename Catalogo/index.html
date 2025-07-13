@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Break Rules - Roupa Urbana desde 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #000000 0%, #434343 100%);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        
+        .cart-item-enter {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        
+        .cart-item-enter-active {
+            opacity: 1;
+            transform: translateX(0);
+            transition: all 300ms ease;
+        }
+        
+        .cart-item-exit {
+            opacity: 1;
+        }
+        
+        .cart-item-exit-active {
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 300ms ease;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header/Navigation -->
+    <header class="bg-black text-white sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                    <a href="#" class="text-2xl font-bold tracking-tight">BREAK <span class="text-red-500">RULES</span></a>
+                </div>
+                
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="hover:text-red-500 transition">Início</a>
+                    <a href="#products" class="hover:text-red-500 transition">Produtos</a>
+                    <a href="#about" class="hover:text-red-500 transition">Sobre Nós</a>
+                    <a href="#contact" class="hover:text-red-500 transition">Contactos</a>
+                </nav>
+                
+                <div class="flex items-center space-x-4">
+                    <button id="search-button" class="text-white hover:text-red-500 transition">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button id="cart-button" class="relative text-white hover:text-red-500 transition">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </button>
+                    <button id="user-button" class="text-white hover:text-red-500 transition">
+                        <i class="fas fa-user"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black py-4 px-4">
+            <div class="flex flex-col space-y-3">
+                <a href="#" class="hover:text-red-500 transition">Início</a>
+                <a href="#products" class="hover:text-red-500 transition">Produtos</a>
+                <a href="#about" class="hover:text-red-500 transition">Sobre Nós</a>
+                <a href="#contact" class="hover:text-red-500 transition">Contactos</a>
+            </div>
+        </div>
+        
+        <!-- Search Bar -->
+        <div id="search-bar" class="hidden bg-black py-3 px-4">
+            <div class="container mx-auto flex">
+                <input type="text" placeholder="Pesquisar produtos..." class="flex-grow bg-gray-800 text-white px-4 py-2 rounded-l focus:outline-none">
+                <button class="bg-red-500 text-white px-4 py-2 rounded-r hover:bg-red-600 transition">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white">
+        <div class="container mx-auto px-4 py-20 md:py-32">
+            <div class="max-w-3xl">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">QUEBRE AS REGRAS</h1>
+                <p class="text-xl md:text-2xl mb-8">Estilo urbano desde 2025. Coleção limitada de t-shirts e sweatshirts unissexo.</p>
+                <a href="#products" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-full transition inline-block">Ver Coleção</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section id="products" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">NOSSOS PRODUTOS</h2>
+            
+            <!-- Product Filters -->
+            <div class="flex flex-wrap justify-center mb-10 gap-4">
+                <button class="filter-btn active px-4 py-2 bg-black text-white rounded-full" data-filter="all">Todos</button>
+                <button class="filter-btn px-4 py-2 border border-black rounded-full hover:bg-black hover:text-white transition" data-filter="tshirt">T-Shirts</button>
+                <button class="filter-btn px-4 py-2 border border-black rounded-full hover:bg-black hover:text-white transition" data-filter="sweatshirt">Sweatshirts</button>
+            </div>
+            
+            <!-- Product Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <!-- Product items will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                    <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Break Rules Team" class="rounded-lg shadow-xl w-full">
+                </div>
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl font-bold mb-6">SOBRE A BREAK RULES</h2>
+                    <p class="text-gray-700 mb-4">Fundada em 2025, a Break Rules nasceu da vontade de desafiar as convenções do mundo da moda. Acreditamos que o estilo não tem género, idade ou regras.</p>
+                    <p class="text-gray-700 mb-4">Todas as nossas peças são cuidadosamente selecionadas para oferecer conforto, qualidade e um design que fala por si. Cada coleção é limitada, garantindo exclusividade aos nossos clientes.</p>
+                    <p class="text-gray-700 mb-6">Com sede em Portugal, estamos comprometidos em oferecer produtos que refletem a energia e diversidade da cultura urbana portuguesa.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-black hover:text-red-500 transition"><i class="fab fa-instagram text-2xl"></i></a>
+                        <a href="#" class="text-black hover:text-red-500 transition"><i class="fab fa-facebook text-2xl"></i></a>
+                        <a href="#" class="text-black hover:text-red-500 transition"><i class="fab fa-tiktok text-2xl"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">O QUE DIZEM OS NOSSOS CLIENTES</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-100 p-6 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"Adoro a qualidade das t-shirts da Break Rules. São tão confortáveis e o design é incrível!"</p>
+                    <p class="font-semibold">- Ana S., Lisboa</p>
+                </div>
+                
+                <div class="bg-gray-100 p-6 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"Compro regularmente na Break Rules. A sweatshirt que comprei no inverno passado ainda está como nova!"</p>
+                    <p class="font-semibold">- Miguel R., Porto</p>
+                </div>
+                
+                <div class="bg-gray-100 p-6 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"Entrega rápida e atendimento excelente. Recomendo a todos os meus amigos!"</p>
+                    <p class="font-semibold">- Sofia M., Braga</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">CONTACTE-NOS</h2>
+            
+            <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="md:flex">
+                    <div class="md:w-1/2 bg-black text-white p-8">
+                        <h3 class="text-2xl font-bold mb-4">INFORMAÇÕES</h3>
+                        <div class="mb-6">
+                            <h4 class="font-semibold mb-2"><i class="fas fa-map-marker-alt mr-2"></i> Morada</h4>
+                            <p>Rua da Inovação, 123<br>Lisboa, Portugal</p>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="font-semibold mb-2"><i class="fas fa-phone-alt mr-2"></i> Telefone</h4>
+                            <p>+351 123 456 789</p>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="font-semibold mb-2"><i class="fas fa-envelope mr-2"></i> Email</h4>
+                            <p>info@breakrules.pt</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2"><i class="fas fa-clock mr-2"></i> Horário</h4>
+                            <p>Segunda a Sexta: 9h - 18h<br>Sábado: 10h - 14h</p>
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-1/2 p-8">
+                        <form id="contact-form">
+                            <div class="mb-4">
+                                <label for="name" class="block text-gray-700 mb-2">Nome</label>
+                                <input type="text" id="name" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-black">
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="block text-gray-700 mb-2">Email</label>
+                                <input type="email" id="email" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-black">
+                            </div>
+                            <div class="mb-4">
+                                <label for="message" class="block text-gray-700 mb-2">Mensagem</label>
+                                <textarea id="message" rows="4" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-black"></textarea>
+                            </div>
+                            <button type="submit" class="bg-black text-white font-bold py-2 px-6 rounded hover:bg-gray-800 transition">Enviar Mensagem</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-12 bg-black text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-2xl font-bold mb-4">INSCREVA-SE NA NOSSA NEWSLETTER</h2>
+            <p class="mb-6 max-w-2xl mx-auto">Receba as últimas novidades, promoções exclusivas e lançamentos de coleções limitadas diretamente no seu email.</p>
+            <form class="max-w-md mx-auto flex">
+                <input type="email" placeholder="Seu email" class="flex-grow px-4 py-3 rounded-l focus:outline-none text-black">
+                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold px-6 py-3 rounded-r transition">Subscrever</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">BREAK RULES</h3>
+                    <p>Moda urbana desde 2025. Roupa unissexo que desafia convenções.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">LINKS ÚTEIS</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-red-500 transition">Política de Privacidade</a></li>
+                        <li><a href="#" class="hover:text-red-500 transition">Termos e Condições</a></li>
+                        <li><a href="#" class="hover:text-red-500 transition">Trocas e Devoluções</a></li>
+                        <li><a href="#" class="hover:text-red-500 transition">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">PAGAMENTOS</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <div class="bg-white text-black p-2 rounded"><i class="fab fa-cc-visa text-2xl"></i></div>
+                        <div class="bg-white text-black p-2 rounded"><i class="fab fa-cc-mastercard text-2xl"></i></div>
+                        <div class="bg-white text-black p-2 rounded"><i class="fab fa-cc-paypal text-2xl"></i></div>
+                        <div class="bg-white text-black p-2 rounded"><i class="fab fa-cc-amex text-2xl"></i></div>
+                        <div class="bg-white text-black p-2 rounded"><i class="fas fa-money-bill-wave text-2xl"></i></div>
+                        <div class="bg-white text-black p-2 rounded"><i class="fas fa-university text-2xl"></i></div>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">REDES SOCIAIS</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-red-500 transition"><i class="fab fa-instagram text-2xl"></i></a>
+                        <a href="#" class="hover:text-red-500 transition"><i class="fab fa-facebook text-2xl"></i></a>
+                        <a href="#" class="hover:text-red-500 transition"><i class="fab fa-tiktok text-2xl"></i></a>
+                        <a href="#" class="hover:text-red-500 transition"><i class="fab fa-youtube text-2xl"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
+                <p>&copy; 2025 - <span id="current-year"></span> Break Rules. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Sidebar -->
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold">O SEU CARRINHO</h3>
+                <button id="close-cart" class="text-gray-500 hover:text-black">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div id="cart-items" class="mb-6">
+                <!-- Cart items will be inserted here by JavaScript -->
+                <div class="text-center py-8 text-gray-500" id="empty-cart-message">
+                    <i class="fas fa-shopping-cart text-4xl mb-4"></i>
+                    <p>O seu carrinho está vazio</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 pt-4 mb-4">
+                <div class="flex justify-between mb-2">
+                    <span>Subtotal</span>
+                    <span id="cart-subtotal">€0.00</span>
+                </div>
+                <div class="flex justify-between mb-4">
+                    <span>Portes</span>
+                    <span>Grátis</span>
+                </div>
+                <div class="flex justify-between font-bold text-lg">
+                    <span>Total</span>
+                    <span id="cart-total">€0.00</span>
+                </div>
+            </div>
+            
+            <button id="checkout-btn" class="w-full bg-black text-white font-bold py-3 px-4 rounded hover:bg-gray-800 transition mb-4">Finalizar Compra</button>
+            <a href="#" class="block text-center text-gray-600 hover:text-black transition">Continuar a comprar</a>
+        </div>
+    </div>
+    <div id="cart-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold">INICIAR SESSÃO</h3>
+                    <button id="close-login" class="text-gray-500 hover:text-black">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <form id="login-form">
+                    <div class="mb-4">
+                        <label for="login-email" class="block text-gray-700 mb-2">Email</label>
+                        <input type="email" id="login-email" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-black">
+                    </div>
+                    <div class="mb-6">
+                        <label for="login-password" class="block text-gray-700 mb-2">Password</label>
+                        <input type="password" id="login-password" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-black">
+                    </div>
+                    <button type="submit" class="w-full bg-black text-white font-bold py-2 px-4 rounded hover:bg-gray-800 transition mb-4">Iniciar Sessão</button>
+                    <p class="text-center text-gray-600">Ainda não tem conta? <a href="#" class="text-black font-semibold hover:underline">Registe-se</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="login-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+
+    <!-- Product Quick View Modal -->
+    <div id="quickview-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-4xl mx-4 max-h-screen overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold" id="quickview-title"></h3>
+                    <button id="close-quickview" class="text-gray-500 hover:text-black">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="md:flex">
+                    <div class="md:w-1/2 mb-6 md:mb-0 md:pr-6">
+                        <img id="quickview-image" src="" alt="" class="w-full rounded-lg">
+                        <div class="grid grid-cols-4 gap-2 mt-4">
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-1/2">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-400 mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-600">(12 avaliações)</span>
+                        </div>
+                        
+                        <p class="text-2xl font-bold mb-4" id="quickview-price"></p>
+                        <p class="text-gray-700 mb-6" id="quickview-description"></p>
+                        
+                        <div class="mb-6">
+                            <label class="block text-gray-700 mb-2">Tamanho</label>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="size-btn border border-gray-300 px-4 py-2 rounded hover:bg-black hover:text-white transition" data-size="XS">XS</button>
+                                <button class="size-btn border border-gray-300 px-4 py-2 rounded hover:bg-black hover:text-white transition" data-size="S">S</button>
+                                <button class="size-btn border border-gray-300 px-4 py-2 rounded hover:bg-black hover:text-white transition active:bg-black active:text-white" data-size="M">M</button>
+                                <button class="size-btn border border-gray-300 px-4 py-2 rounded hover:bg-black hover:text-white transition" data-size="L">L</button>
+                                <button class="size-btn border border-gray-300 px-4 py-2 rounded hover:bg-black hover:text-white transition" data-size="XL">XL</button>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-gray-700 mb-2">Quantidade</label>
+                            <div class="flex items-center">
+                                <button id="decrease-qty" class="border border-gray-300 px-3 py-1 rounded-l hover:bg-gray-100">-</button>
+                                <input type="number" id="product-qty" value="1" min="1" class="w-16 text-center border-t border-b border-gray-300 py-1 focus:outline-none">
+                                <button id="increase-qty" class="border border-gray-300 px-3 py-1 rounded-r hover:bg-gray-100">+</button>
+                            </div>
+                        </div>
+                        
+                        <button id="add-to-cart-btn" class="w-full bg-black text-white font-bold py-3 px-4 rounded hover:bg-gray-800 transition mb-4">Adicionar ao Carrinho</button>
+                        
+                        <div class="border-t border-gray-200 pt-4">
+                            <div class="flex items-center text-gray-600 mb-2">
+                                <i class="fas fa-truck mr-2"></i>
+                                <span>Entrega grátis em Portugal</span>
+                            </div>
+                            <div class="flex items-center text-gray-600">
+                                <i class="fas fa-undo mr-2"></i>
+                                <span>Devoluções gratuitas até 30 dias</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="quickview-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Search bar toggle
+        const searchButton = document.getElementById('search-button');
+        const searchBar = document.getElementById('search-bar');
+        
+        searchButton.addEventListener('click', () => {
+            searchBar.classList.toggle('hidden');
+        });
+
+        // Cart sidebar toggle
+        const cartButton = document.getElementById('cart-button');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const closeCart = document.getElementById('close-cart');
+        const cartOverlay = document.getElementById('cart-overlay');
+        
+        cartButton.addEventListener('click', () => {
+            cartSidebar.classList.remove('translate-x-full');
+            cartOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeCart.addEventListener('click', () => {
+            cartSidebar.classList.add('translate-x-full');
+            cartOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+        
+        cartOverlay.addEventListener('click', () => {
+            cartSidebar.classList.add('translate-x-full');
+            cartOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+
+        // Login modal toggle
+        const userButton = document.getElementById('user-button');
+        const loginModal = document.getElementById('login-modal');
+        const closeLogin = document.getElementById('close-login');
+        const loginOverlay = document.getElementById('login-overlay');
+        
+        userButton.addEventListener('click', () => {
+            loginModal.classList.remove('hidden');
+            loginOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeLogin.addEventListener('click', () => {
+            loginModal.classList.add('hidden');
+            loginOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+        
+        loginOverlay.addEventListener('click', () => {
+            loginModal.classList.add('hidden');
+            loginOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+
+        // Product quick view modal
+        const quickviewModal = document.getElementById('quickview-modal');
+        const closeQuickview = document.getElementById('close-quickview');
+        const quickviewOverlay = document.getElementById('quickview-overlay');
+        
+        closeQuickview.addEventListener('click', () => {
+            quickviewModal.classList.add('hidden');
+            quickviewOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+        
+        quickviewOverlay.addEventListener('click', () => {
+            quickviewModal.classList.add('hidden');
+            quickviewOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+
+        // Product quantity controls
+        const decreaseQty = document.getElementById('decrease-qty');
+        const increaseQty = document.getElementById('increase-qty');
+        const productQty = document.getElementById('product-qty');
+        
+        decreaseQty.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (productQty.value > 1) {
+                productQty.value = parseInt(productQty.value) - 1;
+            }
+        });
+        
+        increaseQty.addEventListener('click', (e) => {
+            e.preventDefault();
+            productQty.value = parseInt(productQty.value) + 1;
+        });
+
+        // Sample product data
+        const products = [
+            // T-Shirts
+            { id: 1, name: "T-Shirt CTRL+Wear", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0094.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 2, name: "T-Shirt City Storm", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0095.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 3, name: "T-Shirt No Limits", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0096.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 4, name: "T-Shirt Reboot Wear", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0097.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 5, name: "T-Shirt Noise Signal", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0098.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 6, name: "T-Shirt Grunge Dream", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0099.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 7, name: "T-Shirt Street Signal", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0100.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 8, name: "T-Shirt Redshift", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0101.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 9, name: "T-Shirt Reboot Wear", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0102.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 10, name: "T-Shirt Brickbeat", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0103.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 11, name: "T-Shirt Blur Vision", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0104.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 12, name: "T-Shirt Chaos Grid", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0105.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 13, name: "T-Shirt Off Script", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0106.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 14, name: "T-Shirt Echo Core", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0107.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 15, name: "T-Shirt Dark Code", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0108.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 16, name: "T-Shirt Neon Drift", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0109.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 17, name: "T-Shirt Voidwalk", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0110.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 18, name: "T-Shirt Urban Dust", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0111.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 19, name: "T-Shirt Night Shift", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0112.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 20, name: "T-Shirt Wild Grid", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0113.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 21, name: "T-Shirt Hack Street", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0114.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 22, name: "T-Shirt Raw Edge", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0115.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 23, name: "T-Shirt Blackout Zone", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0116.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 24, name: "T-Shirt Zone Freak", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0117.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 25, name: "T-Shirt Dark Matter", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0118.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 26, name: "T-Shirt Flash Frame", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0119.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 27, name: "T-Shirt Rebel Mode", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0120.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 28, name: "T-Shirt Urban Pulse", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0121.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 29, name: "T-Shirt Drift Culture", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0122.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 30, name: "T-Shirt Silent Block", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0123.jpg", description: "Estilo urbano com atitude. Edição limitada." },    { id: 31, name: "T-Shirt Data Flow", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0124.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 32, name: "T-Shirt Pixel Riot", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0125.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 33, name: "T-Shirt Techno Drift", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0126.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 34, name: "T-Shirt Future Echo", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0127.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 35, name: "T-Shirt Digital Clash", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0128.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 36, name: "T-Shirt Static Beat", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0129.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 37, name: "T-Shirt Phantom Code", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0130.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 38, name: "T-Shirt Overload Mode", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0131.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 39, name: "T-Shirt Core Signal", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0132.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 40, name: "T-Shirt Crash Pattern", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0133.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 41, name: "T-Shirt Static Dreams", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0134.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 42, name: "T-Shirt Codewave", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0135.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 43, name: "T-Shirt Signal Jam", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0136.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 44, name: "T-Shirt Circuit Burn", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0137.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 45, name: "T-Shirt Urban Glitch", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0138.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 46, name: "T-Shirt Binary Noise", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0139.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 47, name: "T-Shirt Techwave", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0140.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 48, name: "T-Shirt Netpulse", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0141.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 49, name: "T-Shirt Ghostline", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0142.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 50, name: "T-Shirt Chaos Protocol", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0143.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 51, name: "T-Shirt Code Interference", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0144.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 52, name: "T-Shirt Deepstreet", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0145.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 53, name: "T-Shirt Sync Error", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0146.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 54, name: "T-Shirt Retro Fracture", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0147.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 55, name: "T-Shirt Vapor Path", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0148.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 56, name: "T-Shirt Deadzone Drift", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0149.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 57, name: "T-Shirt Glitchwave", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0150.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 58, name: "T-Shirt Analog Howl", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0151.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 59, name: "T-Shirt Meta Street", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0152.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 60, name: "T-Shirt Datastream", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0153.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 61, name: "T-Shirt Terminal Zone", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0154.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 62, name: "T-Shirt Debug Mode", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0155.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 63, name: "T-Shirt Cryptoflux", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0156.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 64, name: "T-Shirt Pixel Echo", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0157.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 65, name: "T-Shirt Flux Pattern", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0158.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 66, name: "T-Shirt Signal Drift", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0159.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 67, name: "T-Shirt Break Layer", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0160.jpg", description: "Estilo urbano com atitude. Edição limitada." },
+    { id: 68, name: "T-Shirt Neon Wreck", price: 15.00, category: "tshirt", image: "breakrules_tshirts_v2/IMG-20250701-WA0161.jpg", description: "Estilo urbano com atitude. Edição limitada." }
+
+        ];
+
+        // Generate product cards
+        const productGrid = document.querySelector('.grid');
+        
+        function renderProducts(filter = 'all') {
+            productGrid.innerHTML = '';
+            
+            const filteredProducts = filter === 'all' 
+                ? products 
+                : products.filter(product => product.category === filter);
+            
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card bg-white rounded-lg overflow-hidden shadow-md';
+                productCard.innerHTML = `
+                    <div class="relative">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-64 object-cover">
+                        <button class="quickview-btn absolute top-2 right-2 bg-white p-2 rounded-full shadow-md hover:bg-black hover:text-white transition" data-id="${product.id}">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">${product.name}</h3>
+                        <p class="text-gray-600 text-sm mb-2">${product.description.substring(0, 60)}...</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold">€${product.price.toFixed(2)}</span>
+                            <button class="add-to-cart-btn bg-black text-white px-3 py-1 rounded text-sm hover:bg-gray-800 transition" data-id="${product.id}">
+                                <i class="fas fa-shopping-cart mr-1"></i> Adicionar
+                            </button>
+                        </div>
+                    </div>
+                `;
+                productGrid.appendChild(productCard);
+            });
+            
+            // Add event listeners to quickview buttons
+            document.querySelectorAll('.quickview-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const productId = parseInt(e.currentTarget.getAttribute('data-id'));
+                    const product = products.find(p => p.id === productId);
+                    
+                    document.getElementById('quickview-title').textContent = product.name;
+                    document.getElementById('quickview-image').src = product.image;
+                    document.getElementById('quickview-price').textContent = `€${product.price.toFixed(2)}`;
+                    document.getElementById('quickview-description').textContent = product.description;
+                    
+                    quickviewModal.classList.remove('hidden');
+                    quickviewOverlay.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            // Add event listeners to add to cart buttons
+            document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const productId = parseInt(e.currentTarget.getAttribute('data-id'));
+                    const product = products.find(p => p.id === productId);
+                    
+                    addToCart(product, 'M', 1);
+                    updateCartCount();
+                    
+                    // Show cart sidebar
+                    cartSidebar.classList.remove('translate-x-full');
+                    cartOverlay.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+        }
+        
+        // Initial render
+        renderProducts();
+        
+        // Product filter buttons
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active', 'bg-black', 'text-white'));
+                
+                // Add active class to clicked button
+                button.classList.add('active', 'bg-black', 'text-white');
+                
+                // Remove border if active
+                if (button.classList.contains('active')) {
+                    button.classList.remove('border');
+                }
+                
+                // Filter products
+                const filter = button.getAttribute('data-filter');
+                renderProducts(filter);
+            });
+        });
+        
+        // Cart functionality
+        let cart = [];
+        
+        function addToCart(product, size, quantity) {
+            const existingItem = cart.find(item => item.id === product.id && item.size === size);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    size: size,
+                    quantity: quantity
+                });
+            }
+            
+            renderCart();
+            updateCartCount();
+        }
+        
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            renderCart();
+            updateCartCount();
+        }
+        
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-count').textContent = count;
+        }
+        
+        function renderCart() {
+            const cartItems = document.getElementById('cart-items');
+            const emptyCartMessage = document.getElementById('empty-cart-message');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '';
+                cartItems.appendChild(emptyCartMessage);
+                document.getElementById('cart-subtotal').textContent = '€0.00';
+                document.getElementById('cart-total').textContent = '€0.00';
+                return;
+            }
+            
+            emptyCartMessage.remove();
+            
+            cartItems.innerHTML = '';
+            
+            let subtotal = 0;
+            
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'flex items-center py-4 border-b border-gray-200';
+                cartItem.innerHTML = `
+                    <div class="w-20 h-20 bg-gray-100 rounded overflow-hidden mr-4">
+                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-grow">
+                        <h4 class="font-bold">${item.name}</h4>
+                        <p class="text-gray-600 text-sm">Tamanho: ${item.size}</p>
+                        <div class="flex justify-between items-center mt-1">
+                            <div class="flex items-center">
+                                <button class="decrease-quantity text-gray-500 px-2" data-index="${index}">-</button>
+                                <span class="mx-2">${item.quantity}</span>
+                                <button class="increase-quantity text-gray-500 px-2" data-index="${index}">+</button>
+                            </div>
+                            <span class="font-bold">€${itemTotal.toFixed(2)}</span>
+                        </div>
+                    </div>
+                    <button class="remove-item ml-4 text-gray-500 hover:text-red-500 transition" data-index="${index}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+            
+            document.getElementById('cart-subtotal').textContent = `€${subtotal.toFixed(2)}`;
+            document.getElementById('cart-total').textContent = `€${subtotal.toFixed(2)}`;
+            
+            // Add event listeners to quantity buttons
+            document.querySelectorAll('.decrease-quantity').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const index = parseInt(e.currentTarget.getAttribute('data-index'));
+                    if (cart[index].quantity > 1) {
+                        cart[index].quantity--;
+                        renderCart();
+                        updateCartCount();
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.increase-quantity').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const index = parseInt(e.currentTarget.getAttribute('data-index'));
+                    cart[index].quantity++;
+                    renderCart();
+                    updateCartCount();
+                });
+            });
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const index = parseInt(e.currentTarget.getAttribute('data-index'));
+                    removeFromCart(index);
+                });
+            });
+        }
+        
+        // Add to cart from quickview
+        document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+            const productTitle = document.getElementById('quickview-title').textContent;
+            const product = products.find(p => p.name === productTitle);
+            const size = document.querySelector('.size-btn.active')?.getAttribute('data-size') || 'M';
+            const quantity = parseInt(document.getElementById('product-qty').value);
+            
+            addToCart(product, size, quantity);
+            updateCartCount();
+            
+            // Close quickview
+            quickviewModal.classList.add('hidden');
+            quickviewOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+            
+            // Show cart sidebar
+            cartSidebar.classList.remove('translate-x-full');
+            cartOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Size selection in quickview
+        document.querySelectorAll('.size-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                document.querySelectorAll('.size-btn').forEach(btn => {
+                    btn.classList.remove('active', 'bg-black', 'text-white');
+                });
+                e.currentTarget.classList.add('active', 'bg-black', 'text-white');
+            });
+        });
+        
+        // Checkout button
+        document.getElementById('checkout-btn').addEventListener('click', () => {
+            alert('Obrigado pela sua compra! Será redirecionado para a página de pagamento.');
+            cart = [];
+            renderCart();
+            updateCartCount();
+        });
+        
+        // Contact form submission
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Obrigado pela sua mensagem! Entraremos em contacto brevemente.');
+            e.target.reset();
+        });
+        
+        // Login form submission
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Início de sessão realizado com sucesso!');
+            loginModal.classList.add('hidden');
+            loginOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>
